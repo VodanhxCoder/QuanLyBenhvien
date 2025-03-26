@@ -1,0 +1,438 @@
+﻿/* Đặt kích thước và căn chỉnh hình ảnh trên trang chủ */
+/* ...existing code... */
+
+
+
+.departments-section .department-item {
+    background-color: #FCFEFE;
+    color: #1F2B6C;
+    padding: 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+}
+
+.departments-section .department-item:hover {
+    background-color: #1F2B6C;
+    color: #FCFEFE;
+}
+
+.departments-section .department-item i {
+    margin-bottom: 10px;
+}
+
+/* ...existing code... */
+.imageIndex {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-image: url("/image/imgindex.png");
+}
+
+/* Đặt kích thước và căn chỉnh hình ảnh poster */
+.ImagePoster {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    background-image: url("/image/poster1.png");
+    margin-bottom:80px;
+}
+
+/* Đặt chiều cao cho container */
+.container {
+    height: 100%;
+}
+
+/* Đặt chiều cao và căn chỉnh cho hàng */
+.row {
+    height: 100%;
+    align-content: center;
+}
+
+.option-btn{
+    height:100px;
+    margin-bottom:20px;
+
+}
+/* Đặt kiểu dáng cho các nút */
+.mt-2 .btn {
+    border-radius: 30px;
+    height: 100px;
+    width: 304px;
+    align-content: center;
+    background-color: #C4D9FF;
+    color: black;
+    font-weight: bold;
+}
+.magrinR{
+    margin-right:80px;
+}
+/*  ---------------------------------*/
+
+
+
+.slide-doctor {
+    padding: 30px;
+}
+.carousel-item .row{
+    justify-items:center;
+    align-content:center;
+}
+/* Đặt kiểu dáng cho thẻ bác sĩ */
+.doctor-card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 317px; /* Đặt chiều rộng thẻ */
+    height: 538px;
+}
+
+/* Đặt kiểu dáng cho hình ảnh trong thẻ bác sĩ */
+.doctor-card img {
+    object-fit: cover;
+}
+
+/* Đặt kiểu dáng cho phần thân thẻ bác sĩ */
+    .doctor-card .card-body {
+        background-color: #BFD2F8;
+        padding: 12px 0 0 0;
+    }
+
+/* Đặt kiểu dáng cho tiêu đề thẻ bác sĩ */
+.doctor-card .card-title {
+    font-size: 1rem; /* Giảm kích thước font */
+    font-weight: bold;
+}
+
+/* Đặt kiểu dáng cho văn bản trong thẻ bác sĩ */
+.doctor-card .card-text {
+    color: #6c757d;
+    font-size: 0.875rem; /* Giảm kích thước font */
+}
+
+/* Đặt kiểu dáng cho biểu tượng mạng xã hội */
+.doctor-card .social-icons {
+    margin: 10px 0;
+}
+
+/* Đặt kiểu dáng cho các liên kết biểu tượng mạng xã hội */
+.doctor-card .social-icons a {
+    color: #007bff;
+    margin: 5px 10px;
+    font-size: 1rem; /* Giảm kích thước font */
+}
+
+/* Đặt kiểu dáng cho nút xem hồ sơ */
+    .doctor-card .btn-primary {
+        background-color: #1F2B6C;
+        align-content: center;
+        width: 100%;
+        height: 46px;
+        font-size: 0.875rem; /* Giảm kích thước font */
+    }
+
+.carousel-item{
+    margin-bottom:60px;
+
+}
+
+
+/* Thay đổi màu sắc của các chỉ báo */
+.carousel-indicators [data-bs-target] {
+    background-color: #000; /* Màu đen */
+}
+
+
+
+/*welcome section ------------------------------------------ */
+.welcome-section {
+ 
+    padding: 60px 0;
+}
+.welcome-content {
+    width: 658px;
+    margin-bottom: 40px;
+}
+.welcome-section h2 {
+    color: #007bff; /* Màu xanh dương */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.welcome-section h1 {
+    color: #343a40; /* Màu đen đậm */
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.welcome-section p {
+    color: #6c757d; /* Màu xám */
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.welcome-section .btn-link {
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.welcome-section .btn-link i {
+    margin-left: 5px;
+}
+
+/*---------------------------------------------------*/
+.services-section {
+    display: grid;
+    /* Cột 1 chiếm 25%, cột 2 chiếm 50%, cột 3 chiếm 25% */
+    grid-template-columns: 15% 40% 25%;
+    grid-template-rows: auto auto;
+    align-content: center;
+    justify-content: center;
+    /* Định nghĩa các khu vực (grid areas) cho layout */
+    grid-template-areas:
+        "list content image1"
+        "list description image2";
+}
+
+    /* Áp dụng cho các phần tử con theo grid area */
+    .services-section .list-group {
+        text-align:center;
+        grid-area: list;
+        height: 100%;
+        width: 205px;
+        margin:auto;
+       
+     
+    }
+    .services-section .list-group-item {
+        justify-content: center;
+        align-content: center;
+        border-width: 1px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        padding: 0;
+        background-color: #FCFEFE;
+        height: 106px;
+    }
+    .services-section .list-group-item:hover {
+            background-color: #007bff;
+            color: white;
+    }
+        .services-section .list-group-item.active {
+            background-color: #1F2B6C;
+            color: white;
+        }
+    .services-section .list-group-view {
+        height: 40px;
+        background-color: #1F2B6C;
+        color: white;
+        align-content:center;
+        text-decoration:none;
+    }
+.services-section .content {
+    grid-area: content;
+  
+}
+
+
+    .services-section .content ul li, .description {
+        text-align: justify;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+
+    .services-section .image:first-of-type {
+        grid-area: image1;
+    }
+
+    .services-section .description {
+        grid-area: description;
+    }
+
+    .services-section .image:last-of-type {
+        grid-area: image2;
+    }
+
+
+    .services-section > div {
+        padding: 20px;  
+    }
+
+.table-content {
+    padding: 60px 0;
+  
+}
+/*---   */
+/* ...existing code... */
+
+.departments-section {
+    padding: 60px;
+}
+.departments-section .label-department {
+    font-size: 30px;
+    font-weight: bold;
+    color: #1F2B6C;
+    margin-bottom: 20px;
+}
+.departments-section .department-item {
+    background-color: #FCFEFE;
+    color: #1F2B6C;
+    padding: 20px ;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    text-decoration:none;
+}
+
+.departments-section .department-item:hover {
+    background-color: #1F2B6C;
+    color: #FCFEFE;
+}
+
+.departments-section .department-item i {
+    margin-bottom: 10px;
+}
+
+/* ...existing code... */
+/* Appointment Section Styles */
+.appointment-section {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    padding: 50px 0;
+    background-image: url('/image/posterLichHen.svg');
+    height: 573px;
+}
+
+    .appointment-section .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+        z-index: 1;
+    }
+
+    .appointment-section .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .appointment-section .card {
+        background-color: #e0f7fa;
+        border: none;
+    }
+
+    .appointment-section .form-control,
+    .appointment-section .form-select {
+        border: 1px solid #b2ebf2;
+        border-radius: 0;
+        width: 100%;
+        padding: 12px;
+        /* Loại bỏ margin-bottom nếu đã có mb-3 trong HTML */
+    }
+
+    .appointment-section textarea {
+        min-height: 100px;
+        width: 100%;
+    }
+
+    .appointment-section .btn-primary {
+        background-color: #b39ddb;
+        border: none;
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    /* Thêm padding cho cột */
+    .appointment-section .row > div {
+        padding: 0 15px; /* Tạo khoảng cách bên trong cột */
+    }
+
+    /* Giữ khoảng cách giữa các hàng */
+    .appointment-section .row {
+        margin-bottom: 15px;
+        /* Contact Section Styles */
+    }
+    .contact-section {
+        padding: 60px 0;
+    }
+        .contact-section .label-contact {
+            margin-bottom: 80px;
+        }
+
+        .contact-section h2 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #1F2B6C;
+            margin-bottom: 40px;
+        }
+
+.contact-item {
+    padding: 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 233px;
+    background-color: #BFD2F8;
+}
+
+    .contact-item i {
+        margin-bottom: 10px;
+    }
+
+    .contact-item h5 {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .contact-item p {
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .bg-lightblue {
+        background-color: #e0f7fa;
+        color: #1F2B6C;
+    }
+
+    .bg-darkblue {
+        background-color: #1F2B6C;
+        color: #FCFEFE;
+    }
+
+    .contact-item:hover {
+        background-color: #1F2B6C;
+        color: #FCFEFE;
+    }
+
+    .contact-item:hover .bg-darkblue {
+        background-color: #FCFEFE;
+        color: #1F2B6C;
+    }
+    
+
+
+
+/**/
+
+

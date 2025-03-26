@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-QuanLyBenhvien-6dea0e71-fd65-4d0c-aa63-0810e6d4d36b</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\image\Call.svg" />
+    <None Include="wwwroot\image\Clock.svg" />
+    <None Include="wwwroot\image\logo.png" />
+    <None Include="wwwroot\image\maleuser.svg" />
+    <None Include="wwwroot\image\meddical.png" />
+    <None Include="wwwroot\image\search.svg" />
+    <None Include="wwwroot\image\vitri.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.14" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QuanLyBenhvien</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+   
+</head>
+
+<body class="container">
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <img src="/image/logo.png" alt="E Hospital">
+                <span><t>E </t><strong>HOSPITAL</strong></span>
+            </div>
+            <div class="info">
+                <img src="/image/Call.svg" alt="">
+                <div class="col"> <p>EMERGENCY</p> <p1><a href="tel:(237) 681-812-255">(237) 681-812-255</a></p1></div>
+
+                <img src="/image/Clock.svg" alt="">
+                <div class="col"><p> GIỜ LÀM VIỆC</p> <p1>07:00 - 20:00 Everyday</p1>  </div>
+
+                <img src="/image/vitri.svg" alt="">
+                <div class="col">  <p>VỊ TRÍ</p> <p1> 0123 Some Place</p1></div>
+
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li class="active"><a href="#">Trang chủ</a></li>
+                <li><a href="#">Giới Thiệu</a></li>
+                <li><a href="#">Dịch Vụ</a></li>
+                <li><a href="#">Bệnh Viện</a></li>
+                <li><a href="#">Bệnh Nhân</a></li>
+                <li><a href="#">Đặt lịch khám</a></li>
+                <li><a href="#">Nhà thuốc</a></li>
+                <li><a href="#">Liên hệ</a></li>
+            </ul>
+            <div class="actions">
+                <button class="search-btn"><img src="/image/search.svg"></img></button>
+                <button class="appointment-btn">ĐẶT LỊCH</button>
+                <div class="profile-icon">
+                    <img class="avatar" src="image/maleuser.svg" alt="">
+                </div>
+            </div>
+        </nav>
+    </header>
+
+ 
+        <main role="main">
+            @RenderBody()
+        </main>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>MEDDICAL</h5>
+                    <p>Dẫn đầu về Y tế<br>Xuất sắc,<br>Chăm sóc đáng tin cậy.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Liên kết quan trọng</h5>
+                    <ul>
+                        <li><a href="#">Lịch Hẹn</a></li>
+                        <li><a href="#">Bác sĩ</a></li>
+                        <li><a href="#">Dịch vụ</a></li>
+                        <li><a href="#">Giới Thiệu</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Liên hệ</h5>
+                    <p>Call: (237) 681-812-255<br>Email: fildineesoe@gmail.com<br>Address: 0123 Some place<br>Some country</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Bản tin</h5>
+                    <input type="email" placeholder="Enter your email address" />
+                    <button type="submit"><img src="/image/send-icon.svg" alt="Send"></button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <hr />
+                    <p>&copy; 2021 Hospital's name All Rights Reserved by PNTEC-LTD</p>
+                    <div class="social-icons">
+                        <a href="#"><img src="/image/linkedin.svg" alt="LinkedIn"></a>
+                        <a href="#"><img src="/image/facebook.svg" alt="Facebook"></a>
+                        <a href="#"><img src="/image/instagram.svg" alt="Instagram"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

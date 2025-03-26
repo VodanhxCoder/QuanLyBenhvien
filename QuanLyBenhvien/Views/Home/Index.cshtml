@@ -1,0 +1,345 @@
+﻿@{
+    <!-- No changes needed in this file as the CSS changes will automatically apply to the existing HTML structure -->
+    ViewData["Title"] = "Home Page";
+    var images = new List<string> { "doctor1.jpg", "doctor2.jpg", "doctor3.jpg", "doctor4.jpg", "doctor5.jpg" };
+}
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/QuanLyBenhvien.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+   
+
+
+    <script src="https://kit.fontawesome.com/e8a2370f9c.js" crossorigin="anonymous"></script>
+  
+</head>
+<body>
+   
+        <section class="hero-section ImagePoster py-5 text-center">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h1>CHĂM SÓC SỨC KHỎE<br>Đơn giản và tiện lợi với y tế xuất sắc</h1>
+                    </div>
+                </div>
+            </div>
+     
+        <div class="option-btn container">
+            <div class="mt-2">
+                <a href="#" class="btn magrinR">ĐẶT LỊCH KHÁM</a>
+                <a href="#" class="btn magrinR">BỐI ĐỘNG NHÂN VIÊN</a>
+                <a href="#" class="btn">GIẢI ĐÁP CÂU HỎI</a>
+            </div>
+        </div>
+    </section>
+
+        <section class="doctors-section py-5">
+            <div class="container">
+                <h2 class="mb-4 text-center">Bác sĩ của chúng tôi</h2>
+                <div class="slide-doctor">
+                    <div id="doctorCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            @for (int i = 0; i < (images.Count + 2) / 3; i++)
+                            {
+                                <button type="button" data-bs-target="#doctorCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-current="@(i == 0 ? "true" : "false")" aria-label="Slide @i"></button>
+                            }
+                        </div>
+
+                        <div class="carousel-inner">
+                            @for (int i = 0; i < images.Count; i += 3)
+                            {
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+                                    <div class="row">
+                                        @for (int j = i; j < i + 3 && j < images.Count; j++)
+                                        {
+                                            <div class="col d-flex align-items-center justify-content-center">
+                                                <div class="card doctor-card">
+                                                        <img src="~/image/@images[j]" class="card-img-top" alt="Doctor @j" loading="lazy">
+                                                        <div class="card-body text-center">
+                                                            <h5 class="card-title">Doctor's Name</h5>
+                                                            <p class="card-text">NEUROLOGY</p>
+                                                            <div class="social-icons">
+                                                            <a href="#"><i class="fas fa-user-md"></i></a> <!-- Biểu tượng bác sĩ -->
+                                                            <a href="#"><i class="fas fa-hospital"></i></a> <!-- Biểu tượng bệnh viện -->
+                                                            <a href="#"><i class="fas fa-stethoscope"></i></a> <!-- Biểu tượng ống nghe -->
+                                                            </div>
+                                                        </div>
+                                                        <a href="#" class="btn btn-primary">View Profile</a>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                        
+                           
+                        </div>
+                        
+                      
+                    </div>
+               </div>
+            </div>
+        </section>
+
+        <section class="welcome-section py-5 text-center">
+            <div class="welcome-content container">
+                <h2 class="text-primary">CHÀO MỪNG ĐẾN VỚI BỆNH VIỆN E</h2>
+                <h1 class="text-dark">Nơi chăm sóc sức khỏe tốt nhất</h1>
+                <p class="lead">"Chúng tôi cam kết mang đến dịch vụ y tế chất lượng cao với đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại. Sức khỏe của bạn là ưu tiên hàng đầu của chúng tôi!"</p>
+                <a href="#" class="btn btn-link text-primary">Tìm hiểu thêm <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div> <img src="~/image/poster2.svg"   /></div>
+        </section>
+
+        <!-- New Section -->
+        <section class="table-content">
+            <div class="services-section py-5">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-notes-medical"></i> Khám tổng quát
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-heartbeat"></i> Siêu âm
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-dna"></i> Xét nghiệm ADN
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-vial"></i> Ngân hàng máu
+                    </a>
+                    <a href="#" class="list-group-view" list-group-item-action">
+                        <i class="fas fa-arrow-right"></i> View All
+                    </a>
+                </div>
+                <div class="content">
+                    <h3>CHĂM SÓC SỨC KHỎE TẬN TÂM</h3>        
+                    <div class="row">
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check-circle text-primary"></i> Chăm sóc tận tình</li>
+                                <li><i class="fas fa-check-circle text-primary"></i> Đội ngũ bác sĩ giàu kinh nghiệm</li>
+                                <li><i class="fas fa-check-circle text-primary"></i> Luôn đồng hành cùng bạn</li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check-circle text-primary"></i> Dịch vụ đạt chuẩn 5 sao</li>
+                                <li><i class="fas fa-check-circle text-primary"></i> Cam kết chất lượng hàng đầu</li>
+                                <li><i class="fas fa-check-circle text-primary"></i> Luôn quan tâm</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="image">
+                    <img src="~/image/service.jpg" class="img-fluid" alt="Service Image">
+                </div>
+                <div class="description">
+                    <p>
+                        Tại [Tên Bệnh Viện], chúng tôi cam kết mang đến dịch vụ y tế chất lượng cao với đội ngũ bác sĩ và nhân viên y tế tận tâm. Chúng tôi cung cấp nhiều dịch vụ chăm sóc sức khỏe hiện đại, từ khám tổng quát, chẩn đoán hình ảnh, xét nghiệm cho đến điều trị chuyên sâu. Với cơ sở vật chất tiên tiến và quy trình làm việc chuyên nghiệp, chúng tôi luôn sẵn sàng đồng hành cùng bạn trên hành trình chăm sóc sức khỏe, đảm bảo sự an tâm và hài lòng tuyệt đối.
+                    </p>
+                </div>
+                <div class="image">
+                    <img src="~/image/service.jpg" class="img-fluid" alt="Service Image">
+                </div>
+           </div>
+        </section>
+
+        <section class="departments-section py-5 text-center">
+            <div class="container">
+				<h3 class="text-primary"> CHĂM SÓC TẬN TÌNH</h3>
+                <h2 class="label-department">CÁC KHOA CỦA CHÚNG TÔI</h2>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <a class="department-item" href="#">
+                            <i class="fas fa-brain fa-3x"></i>
+                            <h5>Thần kinh</h5>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <a class="department-item" href="#">
+                            <i class="fas fa-eye fa-3x"></i>
+                            <h5>Mắt</h5>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <a class="department-item" href="#">
+                            <i class="fas fa-stethoscope fa-3x"></i>
+                            <h5>Tiêu hóa</h5>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <a class="department-item" href="#">
+                            <i class="fas fa-heartbeat fa-3x"></i>
+                            <h5>Tim mạch</h5>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <a class="department-item" href="#">
+                            <i class="fas fa-bone fa-3x"></i>
+                            <h5>Xương cốt</h5>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <a class="department-item" href="#">
+                            <i class="fas fa-lungs fa-3x"></i>
+                            <h5>Phổi</h5>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <a class="department-item" href="#">
+                            <i class="fas fa-procedures fa-3x"></i>
+                            <h5>Thận</h5>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <a class="department-item" href="#">
+                            <i class="fas fa-dna fa-3x"></i>
+                            <h5>Ung thư</h5>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <a class="department-item" href="#">
+                            <i class="fas fa-head-side-mask fa-3x"></i>
+                            <h5>Tai Mũi Họng</h5>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <a class="department-item" href="#">
+                            <i class="fas fa-allergies fa-3x"></i>
+                            <h5>Da liễu</h5>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <a class="department-item" href="#">
+                            <i class="fas fa-heart fa-3x"></i>
+                            <h5>Phụ khoa</h5>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+   
+  
+        <section class="appointment-section py-5 background" >
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-left">
+                        <h2 class="text-primary">Đặt lịch hẹn khám</h2>
+                        <p>"Vui lòng điền thông tin bên dưới để đặt lịch khám với bác sĩ. Chúng tôi sẽ liên hệ xác nhận trong thời gian sớm nhất."</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card p-4">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <input type="text" class="form-control" id="name" placeholder="Họ và tên">
+                                </div>
+                                <div class="col">
+                                    <select class="form-select" id="gender">
+                                        <option selected>Giới tính</option>
+                                        <option value="male">Nam</option>
+                                        <option value="female">Nữ</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <input type="email" class="form-control" id="email" placeholder="Email">
+                                </div>
+                                <div class="col">
+                                    <input type="tel" class="form-control" id="phone" placeholder="Số điện thoại">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <input type="date" class="form-control" id="appointmentDate" placeholder="Ngày khám">
+                                </div>
+                                <div class="col">
+                                    <input type="time" class="form-control" id="appointmentTime" placeholder="Giờ khám">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <select class="form-select" id="doctor">
+                                        <option selected>Bác sĩ</option>
+                                        <option value="doctor1">Bác sĩ 1</option>
+                                        <option value="doctor2">Bác sĩ 2</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <select class="form-select" id="department">
+                                        <option selected>Khoa</option>
+                                        <option value="neurology">Thần kinh</option>
+                                        <option value="cardiology">Tim mạch</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <textarea class="form-control" id="notes" rows="3" placeholder="Ghi chú (nếu có)"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col text-center">
+                                    <button type="submit" class="btn btn-primary">Xác nhận đặt lịch</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="contact-section py-5 text-center">
+            <div class="container">
+                <h2 class="label-contact">LIÊN HỆ</h2>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="contact-item">
+                            <i class="fas fa-phone fa-2x mb-3"></i>
+                            <h5>KHẨN CẤP</h5>
+                            <p>(237) 681-812-255</p>
+                            <p>(237) 666-331-894</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt fa-2x mb-3"></i>
+                            <h5>VỊ TRÍ</h5>
+                            <p>0123 Some place</p>
+                            <p>9876 Some country</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope fa-2x mb-3"></i>
+                            <h5>EMAIL</h5>
+                            <p>duongcau564@gmil.com</p>
+                            <p>caolinhcao12345@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="contact-item">
+                            <i class="fas fa-clock fa-2x mb-3"></i>
+                            <h5>GIỜ LÀM VIỆC</h5>
+                            <p>Mon-Sat 07:00-20:00</p>
+                            <p>Sunday Emergency only</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    
+   
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
