@@ -1,0 +1,84 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký EHospital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/styleLogin.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box mt-5">
+            <div class="logo">
+                <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/9cc9cb1e-1684-4296-9649-acfa1affabfc" alt="Logo">
+                <span class="title">EHospital</span>
+            </div>
+            <h2 class="login-title">Đăng ký</h2>
+            <p class="subtitle">Hãy để chúng tôi đồng hành với sức khỏe của bạn</p>
+
+            <label for="fullname">Họ tên*</label>
+            <input type="text" id="fullname" placeholder="Nhập họ và tên của bạn">
+
+            <label for="phone">Số điện thoại*</label>
+            <input type="text" id="phone" placeholder="Nhập số điện thoại của bạn">
+
+            <label for="email">Email*</label>
+            <input type="text" id="email" placeholder="Nhập email của bạn">
+
+            <label for="password">Mật Khẩu*</label>
+            <div class="password-box">
+                <input type="password" id="password" placeholder="Nhập mật khẩu">
+                <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="eye-icon" onclick="togglePassword()">
+            </div>
+            <p class="password-note">Phải ít nhất có 8 kí tự</p>
+
+            <button class="login-button" onclick="alert('Đăng ký thành công!')">Đăng Ký</button>
+
+            <div class="or-divider">OR</div>
+            <div>
+                <div class="social-login">
+
+                    <div class="social-Item">
+                        <form asp-action="ExternalLogin" asp-controller="Home" method="post" onsubmit="showLoading(this)">
+                            <input type="hidden" name="provider" value="Facebook" />
+                            <button class="social-button" type="submit"><img class="social-Img" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/5a6af1bb-48d5-47a6-95e8-d99297809cd7" alt="Facebook"></button>
+                        </form>
+                    </div>
+                    <div class="social-Item">
+                        <form asp-action="ExternalLogin" asp-controller="Home" method="post" onsubmit="showLoading(this)">
+                            <input type="hidden" name="provider" value="Google" />
+                            <button class="social-button" type="submit"><img class="social-Img" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/58c5be9f-5285-4459-a89d-899f4c4e7927" alt="Google"></button>
+                        </form>
+                    </div>
+                    <div class="social-Item">
+                        <button onclick="alert('Pressed!')" class="social-button"><img class="social-Img" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/49da0206-8dd1-4fd7-a080-856a23e7c010" alt="Apple"></button>
+                    </div>
+
+                </div>
+                <p class="register-text">
+                    Bạn đã có tài khoản?
+                    <span class="register-link" onclick="window.location.href='@Url.Action("LogIn", "Home")'">
+                        Đăng Nhập
+                    </span>
+                </p>
+
+            </div>
+         
+        </div>
+
+        <img class="side-image" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/d506cf88-040c-44b2-a399-563afb1106ef" alt="Side Image">
+    </div>
+
+    <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById("password");
+            passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+        }
+    </script>
+</body>
+</html>

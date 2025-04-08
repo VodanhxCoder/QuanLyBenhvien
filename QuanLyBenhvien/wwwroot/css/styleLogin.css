@@ -1,0 +1,171 @@
+﻿body {
+    font-family: 'Poppins', sans-serif;
+    background: #f4f7fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+}
+
+.login-box {
+    padding: 40px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .logo img {
+        width: 40px;
+        height: 40px;
+    }
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.login-title {
+    font-size: 28px;
+    color: #333;
+    margin: 10px 0;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #777;
+}
+
+label {
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.password-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+}
+
+    .password-box input {
+        border: none;
+        flex: 1;
+        padding: 0;
+    }
+
+    .password-box img {
+        width: 20px;
+        cursor: pointer;
+    }
+
+.password-note {
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.login-button {
+    width: 100%;
+    background: #4A90E2;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+    .login-button:hover {
+        background: #357ABD;
+    }
+
+.or-divider {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 14px;
+    color: #777;
+}
+
+.social-login {
+    display: flex;
+    justify-content:center;
+    gap: 40px;
+}
+
+
+
+.social-Item {
+   
+    display: flex;
+ 
+
+}
+.social-button {
+    display: flex;
+    flex: 1;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 20px; 
+}
+
+.socical-Img {
+    width: 20px;
+}
+
+.register-text {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.register-link {
+    color: #4A90E2;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+    .register-link:hover {
+        text-decoration: underline;
+    }
+
+.side-image {
+    width: 50%;
+    object-fit: cover;
+    height:675px;
+}

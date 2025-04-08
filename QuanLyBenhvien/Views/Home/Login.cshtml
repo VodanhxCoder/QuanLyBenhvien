@@ -1,0 +1,111 @@
+﻿@model HospitalFrontend.Models.LoginDto
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@{
+    ViewData["Title"] = "Login - Hospital Management";
+    Layout = null;
+    var siteKey = Configuration["ReCaptcha:SiteKey"];
+}
+
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập EHospital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/styleLogin.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+        <form  asp-action="Login" method="post">
+            @* Tạo Token ko tránh csrf *@
+            @Html.AntiForgeryToken() 
+
+            <div class="logo">
+                <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/9cc9cb1e-1684-4296-9649-acfa1affabfc" alt="Logo">
+                <span class="title">EHospital</span>
+            </div>
+            <h2 class="login-title">Đăng nhập</h2>
+            <p class="subtitle">Hãy để chúng tôi đồng hành với sức khỏe của bạn</p>
+
+            @if (ViewBag.Error != null)
+            {
+                <p style="color: red;">@ViewBag.Error</p>
+            }
+
+            <label asp-for="Email" for="email">Email*</label>
+            <input asp-for="Email" type="text" id="email" placeholder="Enter your e-mail" required>
+            <span asp-validation-for="Email" style="color: red;"></span>
+
+            <label asp-for="Password" for="password">Mật Khẩu*</label>
+            <div class="password-box">
+                <input asp-for="Password" type="password" id="password" placeholder="Enter your password" required>
+                <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="eye-icon" onclick="togglePassword()">
+            </div>
+            <p class="password-note">Phải ít nhất có 8 kí tự</p>
+            <span asp-validation-for="Password" style="color: red;"></span>
+            <div class="mb-3">
+                <div class="g-recaptcha" data-sitekey="@siteKey"></div>
+            </div>
+            <button class="login-button" type="submit">Đăng Nhập</button>
+
+            </form>
+            <div class="or-divider">OR</div>
+
+            <div>
+                <div class="social-login">
+                  
+                        <div class="social-Item">
+                        <form asp-action="ExternalLogin" asp-controller="Home" method="post" onsubmit="showLoading(this)">
+                            <input type="hidden" name="provider" value="Facebook" />
+                                <button class="social-button" type="submit"><img class="social-Img" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/5a6af1bb-48d5-47a6-95e8-d99297809cd7" alt="Facebook"></button>
+                            </form>
+                        </div>
+                        <div class="social-Item">
+                            <form asp-action="ExternalLogin" asp-controller="Home" method="post" onsubmit="showLoading(this)">
+                                <input type="hidden" name="provider" value="Google" />
+                                <button class="social-button" type="submit"><img class="social-Img" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/58c5be9f-5285-4459-a89d-899f4c4e7927" alt="Google"></button>
+                            </form>
+                        </div>
+                        <div class="social-Item">
+                            <button onclick="alert('Tính năng đang bảo trì!')" class="social-button"><img class="social-Img" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/49da0206-8dd1-4fd7-a080-856a23e7c010" alt="Apple"></button>
+                        </div>
+                  
+                </div>
+                    <p class="register-text">
+                        Bạn không có tài khoản?
+                        <span class="register-link" onclick="window.location.href='@Url.Action("Register", "Home")'">Đăng Ký</span>
+                    </p>
+
+            </div>
+
+        </div>
+     
+        <img class="side-image" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/d506cf88-040c-44b2-a399-563afb1106ef" alt="Side Image">
+    </div>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById("password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        }
+
+        function showLoading(form) {
+            var button = form.querySelector('button');
+            button.innerHTML = '<span>Loading...</span>';
+            button.disabled = true;
+        }
+    </script>
+</body>
+</html>
