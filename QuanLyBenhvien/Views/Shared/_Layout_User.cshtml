@@ -1,0 +1,437 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - E Hospital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #F7FAFC;
+            color: #1F2937;
+        }
+
+        .layout-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, #3B82F6, #60A5FA);
+            padding: 16px 32px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            background: #20234D;
+            border-radius: 8px;
+            border: 1px solid #3B44B2;
+            padding: 8px 16px;
+        }
+
+            .header-left img {
+                width: 36px;
+                height: 36px;
+                margin-right: 12px;
+                object-fit: fill;
+            }
+
+            .header-left span {
+                color: #FFFFFF;
+                font-size: 14px;
+                font-weight: bold;
+                margin-bottom: 2px;
+            }
+
+                .header-left span:nth-child(2) {
+                    color: #F2F3F6;
+                    font-size: 12px;
+                    font-weight: normal;
+                }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+            .header-right button {
+                background: #21234E;
+                border-radius: 8px;
+                border: 1px solid #3B44B2;
+                padding: 8px;
+                margin-right: 10px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+                .header-right button:hover {
+                    background: #3B44B2;
+                    transform: scale(1.05);
+                }
+
+            .header-right img {
+                border-radius: 8px;
+                width: 24px;
+                height: 24px;
+                object-fit: fill;
+            }
+
+        .divider {
+            width: 1px;
+            height: 31px;
+            background: #E5E7FB;
+            margin: 0 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+            .user-info img {
+                width: 32px;
+                height: 32px;
+                margin-right: 10px;
+                object-fit: fill;
+            }
+
+            .user-info div {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .user-info .user-name {
+                color: #FFFFFF;
+                font-size: 14px;
+                font-weight: bold;
+                order: 1;
+            }
+
+            .user-info .user-email {
+                color: #E5E7FB;
+                font-size: 12px;
+                font-weight: normal;
+                order: 2;
+            }
+
+        /* Content Wrapper */
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+            margin-top: 80px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #FFFFFF;
+            border-radius: 12px;
+            padding: 30px 16px; /* Giảm từ 40px 24px */
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+            width: 220px; /* Giảm từ 300px */
+            position: fixed;
+            top: 80px;
+            left: 0;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+            .sidebar::-webkit-scrollbar {
+                display: none;
+            }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            padding: 0 15px 3px 15px; /* Giảm từ 21px */
+            margin-bottom: 12px; /* Giảm từ 15px */
+        }
+
+            .sidebar-header img {
+                width: 28px; /* Giảm từ 31px */
+                height: 28px; /* Giảm từ 32px */
+                margin-right: 6px; /* Giảm từ 7px */
+                object-fit: fill;
+            }
+
+            .sidebar-header span {
+                color: #1F2937;
+                font-size: 24px; /* Giảm từ 31px */
+                font-weight: bold;
+            }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            border-radius: 6px;
+            padding: 6px 10px; /* Giảm từ 10px 14px */
+            margin-bottom: 2px; /* Giảm từ 4px */
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            border:0px;
+            width:100%;
+            background: #FFFFFF;
+
+        }
+
+            .sidebar-item:hover {
+                background: #E5E7EB;
+                color: #1E40AF;
+            }
+
+            .sidebar-item img {
+                width: 20px;
+                height: 20px;
+                margin-right: 8px; 
+                object-fit: fill;
+            }
+
+            .sidebar-item span {
+                color: #667084;
+                font-size: 12px; 
+            }
+
+            .sidebar-item.active {
+                background: linear-gradient(180deg, #CCD0F8, #CCD0F833);
+            }
+
+                .sidebar-item.active span {
+                    color: #070B5C;
+                    font-weight: bold;
+                }
+
+        .sidebar-divider {
+            width: 180px; /* Giảm từ 236px */
+            height: 1px;
+            background: #E5E7EB;
+            margin: 12px 0; /* Giảm từ 15px */
+        }
+
+        .support-center {
+            background: #F2F3FD;
+            border-radius: 6px;
+            padding: 35px 10px 10px 10px; /* Giảm từ 41px 12px 12px 12px */
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            position: relative;
+        }
+
+            .support-center span:first-child {
+                color: #1F2937;
+                font-size: 14px; /* Giảm từ 16px */
+                font-weight: bold;
+                margin-bottom: 3px; /* Giảm từ 4px */
+            }
+
+            .support-center span:nth-child(2) {
+                color: #475466;
+                font-size: 12px; /* Giảm từ 14px */
+                width: 160px; /* Giảm từ 212px */
+                display: block;
+                margin: 0 auto 20px; /* Giảm từ 24px */
+            }
+
+            .support-center button {
+                background: #60A5FA;
+                border-radius: 8px;
+                border: 1px solid #1E40AF;
+                padding: 10px 16px; /* Giảm từ 12px 20px */
+                color: #1F2937;
+                font-size: 14px; /* Giảm từ 16px */
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+                .support-center button:hover {
+                    background: #3B82F6;
+                    transform: scale(1.05);
+                }
+
+        .support-icon {
+            position: absolute;
+            top: -20px; /* Giảm từ -23px */
+            left: 70px; /* Điều chỉnh từ 94px để căn giữa */
+            width: 40px; /* Giảm từ 48px */
+            background: #CCD0F8;
+            border-radius: 20px; /* Giảm từ 28px */
+            border: 6px solid #E5E7EB; /* Giảm từ 8px */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+            .support-icon img {
+                border-radius: 20px;
+                height: 20px; /* Giảm từ 24px */
+                margin: 10px; /* Giảm từ 12px */
+                object-fit: fill;
+            }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px; /* Giảm từ 340px (300px sidebar + 40px padding) xuống 260px (220px sidebar + 40px padding) */
+            padding: 32px;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/5d12168b-826d-4e6a-bb7d-03a618909c08" alt="Logo">
+                <div>
+                    <span>E Hospital</span>
+                    <span>87-89 Đ. Trần Cung, Nghĩa Tân, Cầu Giấy, Hà Nội</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div>
+                    <button onclick="alert('Pressed!')">
+                        <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/fa6e10c0-11b2-461a-a6b4-53d620cacc7d" alt="Icon">
+                    </button>
+                    <button onclick="alert('Pressed!')">
+                        <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/224ed2d0-20c5-425d-8254-38e004481c99" alt="Icon">
+                    </button>
+                </div>
+                <div class="divider"></div>
+                <div class="user-info">
+                    <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/6b5a783b-feb9-476e-879c-0333ee5f8edb" alt="User Avatar">
+                    <div>
+                        <span class="user-name">Nguyễn Khánh Dương</span>
+                        <span class="user-email">diepthanhduong459@gmail.com</span>
+                    </div>
+                    <button onclick="alert('Pressed!')">
+                        <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/556d3993-6ea2-4121-a9cd-2f4da7be634d" alt="Icon">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/3eac5511-9f57-4b1f-bb74-2bcdf7b86d50" alt="Logo">
+                    <span>E Hospital</span>
+                </div>
+                <div class="sidebar-divider"></div>
+                <a href="@Url.Action("Overview", "Home")" class="sidebar-item">
+                    <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/09bf672c-5c22-47b4-ae29-a9b1e7a8be0f" alt="Icon">
+                    <span>Trang tổng quan</span>
+                </a>
+                <a href="@Url.Action("DoctorAppointments", "Home")" class="sidebar-item">
+                    <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/f4e72cf8-ac69-498f-942f-e85e3ef5c063" alt="Icon">
+                    <span>Lịch hẹn Bác Sĩ</span>
+                </a>
+                <a href="/TestAppointments" class="sidebar-item">
+                    <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/82d8812e-427c-4fc1-8a4c-ffa22abcbd4d" alt="Icon">
+                    <span>Lịch hẹn Khám Nghiệm</span>
+                </a>
+                <a href="/Patients" class="sidebar-item">
+                    <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/b5f865ee-95bf-4d53-b75a-37b67ff34e72" alt="Icon">
+                    <span>Danh Sách Bệnh Nhân</span>
+                </a>
+                <div class="sidebar-divider"></div>
+                <a href="/ClinicIp" class="sidebar-item">
+                    <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/79c52315-5913-4282-841c-9b08ec90124b" alt="Icon">
+                    <span>Clinic IP</span>
+                </a>
+                <a href="/MedicalBills" class="sidebar-item">
+                    <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/6dc1bbfb-15c6-4475-a797-9f7b056d9a7b" alt="Icon">
+                    <span>Hóa đơn y tế</span>
+                </a>
+                <a href="/Account" class="sidebar-item">
+                    <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/ad3b7067-4457-4e54-b9b2-fec9722c6567" alt="Icon">
+                    <span>Tài Khoản</span>
+                </a>
+                <div class="sidebar-divider"></div>
+                <a href="/Setting" class="sidebar-item">
+                    <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/1e759fe7-9f66-4b3b-97e7-10cdf6f054ff" alt="Icon">
+                    <span>Cài Đặt</span>
+                </a>
+              
+                    <form asp-controller="Home" asp-action="Logout" method="post">
+                    @Html.AntiForgeryToken()
+                      
+                        <button type="submit"  class="sidebar-item">
+
+                        <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/2115eb07-9081-46e5-b738-a4df4ac456e1" alt="Icon">
+
+                            <span>Đăng Xuất</span>
+                        </button>
+                 </form>
+               
+              
+                <div style="margin-top: 250px;">
+                    <!-- Giảm từ 338px để phù hợp với sidebar nhỏ hơn -->
+                    <div class="support-center">
+                        <span>Trung tâm hỗ trợ</span>
+                        <span>"Bạn cần trợ giúp? Chúng tôi luôn sẵn sàng hỗ trợ bạn!"</span>
+                        <button onclick="alert('Pressed!')">Đi tới trung tâm hỗ trợ</button>
+                        <div class="support-icon">
+                            <img src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/1b394d62-7ed0-4c0d-9296-d5dac661d356" alt="Support Icon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        // Lấy tất cả các sidebar-item
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+
+        // Thêm sự kiện click cho từng item
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', function (e) {
+                // Xóa class 'active' khỏi tất cả các item
+                sidebarItems.forEach(i => i.classList.remove('active'));
+                // Thêm class 'active' cho item được nhấp
+                this.classList.add('active');
+            });
+        });
+
+        // Đặt trạng thái active dựa trên URL hiện tại khi tải trang
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentPath = window.location.pathname.toLowerCase();
+            sidebarItems.forEach(item => {
+                const href = item.getAttribute('href').toLowerCase();
+                if (currentPath === href || (currentPath === '/' && href === '/overview')) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

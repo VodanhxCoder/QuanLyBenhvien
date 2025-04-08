@@ -1,5 +1,6 @@
 ﻿using Backend_API.Data;
 using Backend_API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace Backend_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class DoctorsController : ControllerBase
     {
         private readonly HospitalManagementDbContext _context;
@@ -42,6 +44,7 @@ namespace Backend_API.Controllers
         }
 
         // POST: api/Doctors
+        [Authorize(Roles = "Admin,Doctor")]
         [HttpPost]
         public async Task<ActionResult<Doctor>> CreateDoctor(Doctor doctor)
         {
