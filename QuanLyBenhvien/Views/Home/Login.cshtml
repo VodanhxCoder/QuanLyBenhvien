@@ -36,8 +36,9 @@
             }
 
             <label asp-for="Email" for="email">Email*</label>
+             <span asp-validation-for="Email" style="color: red;"></span>
             <input asp-for="Email" type="text" id="email" placeholder="Enter your e-mail" required>
-            <span asp-validation-for="Email" style="color: red;"></span>
+        
 
             <label asp-for="Password" for="password">Mật Khẩu*</label>
             <div class="password-box">

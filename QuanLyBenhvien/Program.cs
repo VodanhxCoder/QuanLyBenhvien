@@ -1,5 +1,5 @@
 ﻿using Fontend.Services;
-using HospitalFrontend.Services;
+using Fontend.Services.Gmail;
 using Microsoft.AspNetCore.Authentication.Cookies;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,13 +11,33 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 
+//
+// Debug: In tất cả các key trong configuration để kiểm tra
+foreach (var key in builder.Configuration.AsEnumerable())
+{
+    Console.WriteLine($"Configuration Key: {key.Key}, Value: {key.Value}");
+}
+
+// Đọc cấu hình BackendApiUrl
+var backendApiUrl = builder.Configuration["BackendApiUrl"];
+Console.WriteLine($"BackendApiUrl: {backendApiUrl}");
+
+// Kiểm tra BackendApiUrl
+if (string.IsNullOrEmpty(backendApiUrl))
+{
+    Console.WriteLine("Error: BackendApiUrl is not configured in appsettings.json. Using default value.");
+    backendApiUrl = "https://localhost:7023/";
+}
+//
+
 // Thêm dịch vụ Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Thêm dòng này
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; 
 })
+
 .AddCookie()
 .AddFacebook(options =>
 {
@@ -54,7 +74,6 @@ builder.Services.AddAuthentication(options =>
 
 
 
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -66,10 +85,18 @@ builder.Services.AddHttpClient("BackendApi", client =>
 });
 
 
-var backendApiUrl = builder.Configuration["BackendApiUrl"];
-Console.WriteLine($"BackendApiUrl: {backendApiUrl}");
+
+//add Gmail Service (MailKit)
+builder.Services.AddSingleton<EmailService>();
 
 
+
+// Add VerificationService
+builder.Services.AddHttpClient<VerificationService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["BackendApiUrl"]);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
 
 
 
@@ -83,6 +110,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+
 
 // Add AuthService
 builder.Services.AddScoped<AuthService>();

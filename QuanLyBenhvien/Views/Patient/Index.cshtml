@@ -1,8 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Patient Dashboard";
+    Layout = "~/Views/Shared/_Layout_User.cshtml";
 }
 
 <div class="text-center">
     <h2>Patient Dashboard</h2>
     <p>Welcome, Patient! You can view your medical records here.</p>
+    <form asp-controller="Home" asp-action="Logout" method="post" class="d-inline">
+        <button type="submit" class="btn btn-link nav-link">Đăng xuất</button>
+    </form>
 </div>
