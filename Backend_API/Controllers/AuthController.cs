@@ -2,6 +2,7 @@
 using Backend_API.DTOs;
 using Backend_API.DTOs.Backend_API.DTOs;
 using Backend_API.Models;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -24,7 +25,7 @@ namespace Backend_API.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost("Register")]
+        [HttpPost("Register")] //đăng ký thủ công 
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             if (!ModelState.IsValid)
@@ -56,35 +57,44 @@ namespace Backend_API.Controllers
         }
 
 
+
+
         // Xử lý đăng nhập
+
+
+
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto) // nhận form gồm email and password 
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email); // Tìm người dùng theo email
-            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))   //kireerm tra xem người dùng có tồn tại không và mật khẩu có đúng không
             {
-                // Nếu không tìm thấy người dùng hoặc mật khẩu không đúng, trả về lỗi
-                return Unauthorized("Invalid email or password.");
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email); // Tìm người dùng theo email
+                if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))  //kireerm tra xem người dùng có tồn tại không và mật khẩu có đúng không
+                {
+                    return Unauthorized("Invalid email or password.");
+                }
+
+                var token = GenerateJwtToken(user); // Tạo JWT token cho người dùng
+                Response.Cookies.Append("token", token, new CookieOptions   // Lưu token vào cookie
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTimeOffset.Now.AddHours(1) //  thời gian sống  1 giờ
+                });
+
+                return Ok(new AuthResponseDto // trả về thông tin người dùng (không bao gồm mật khẩu)
+                {
+                    Token = token,
+                    UserName = user.UserName,
+                    UserType = user.UserType
+                });
             }
-         
-            var token = GenerateJwtToken(user);  // Tạo JWT token cho người dùng
-            Response.Cookies.Append("token", token, new CookieOptions   // Lưu token vào cookie
-            {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
-                Expires = DateTimeOffset.Now.AddHours(1) //  thời gian sống  1 giờ
-            });
-
-            return Ok(new { userName = user.UserName, userType = user.UserType });  // trả về thông tin người dùng (không bao gồm mật khẩu)
         }
-
-
 
         // Xử lý đăng nhập bằng tài khoản xã hội
 
         [HttpPost("ExternalLogin")]
-        public async Task<IActionResult> ExternalLogin([FromBody] ExternalLoginDto dto)
+        public async Task<IActionResult> ExternalLogin([FromBody] ExternalLoginDto dto) 
         {
             if (dto == null || string.IsNullOrEmpty(dto.Email) || string.IsNullOrEmpty(dto.Provider))
             {
@@ -120,6 +130,7 @@ namespace Backend_API.Controllers
             });
         }
 
+        //Check Gmail 
 
 
 

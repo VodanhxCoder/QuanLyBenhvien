@@ -1,5 +1,8 @@
-﻿@{
+﻿@model HospitalFrontend.Models.RegisterDto
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@{
     Layout = null;
+    var siteKey = Configuration["ReCaptcha:SiteKey"];
 }
 
 <!DOCTYPE html>
@@ -10,8 +13,283 @@
     <title>Đăng ký EHospital</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/styleLogin.css">
+    <style>
+        /* CSS cho thông báo */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: -400px;
+            max-width: 300px;
+            padding: 15px;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+            z-index: 1000;
+            transition: left 0.5s ease-in-out;
+        }
+
+            .notification.show {
+                left: 20px;
+            }
+
+            .notification.success {
+                background-color: #4CAF50;
+            }
+
+            .notification.error {
+                background-color: #f44336;
+            }
+
+        /* CSS cho overlay và reCAPTCHA */
+        .captcha-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .captcha-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            width: 350px;
+        }
+
+            .captcha-container h3 {
+                margin-bottom: 20px;
+                font-family: 'Poppins', sans-serif;
+                font-weight: 600;
+                font-size: 18px;
+                color: #333;
+            }
+
+            .captcha-container .g-recaptcha {
+                margin-bottom: 15px;
+            }
+
+            .captcha-container .captcha-footer {
+                font-size: 12px;
+                color: #666;
+            }
+
+            .captcha-container .back-button {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background: none;
+                border: none;
+                font-size: 16px;
+                color: #666;
+                cursor: pointer;
+                transition: color 0.3s ease;
+            }
+
+            .captcha-container .back-button:hover {
+                color: #333;
+            }
+
+        /* CSS cho overlay nhập mã xác thực */
+        .verify-code-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .verify-code-container {
+            position: relative;
+            background: linear-gradient(135deg, #ffffff, #f0f4f8);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 400px;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .verify-code-container h3 {
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 22px;
+            color: #333;
+        }
+
+        .verify-code-container p {
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .verify-code-container .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* CSS cho các ô nhập mã */
+        .code-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .code-inputs input {
+            width: 40px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .code-inputs input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+        }
+
+        .verify-code-container button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .verify-code-container button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Nút thoát popup */
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover {
+            color: #333;
+        }
+
+        .verify-code-container .error {
+            color: #f44336;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        /* CSS cho loading */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @@keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
+    <!-- Thông báo -->
+    @if (ViewBag.Success != null || ViewBag.Error != null)
+    {
+        <div class="notification @(ViewBag.Success != null ? "success" : "error")" id="notification">
+            @(ViewBag.Success ?? ViewBag.Error)
+        </div>
+    }
+
+    <!-- Overlay cho loading -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Overlay cho reCAPTCHA -->
+    <div class="captcha-overlay" id="captchaOverlay">
+        <div class="captcha-container">
+            <button class="back-button" onclick="closeCaptchaOverlay()">← Quay lại</button>
+            <h3>Xác minh bạn không phải là robot</h3>
+            <div class="g-recaptcha" data-sitekey="@siteKey" data-callback="onRecaptchaSuccess"></div>
+            <div class="captcha-footer">
+                Bảo mật - Điều khoản, số điện thoại, số đăng ký
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay cho nhập mã xác thực -->
+    <div class="verify-code-overlay" id="verifyCodeOverlay">
+        <div class="verify-code-container">
+            <button class="close-button" onclick="closeVerifyCodeOverlay()">×</button>
+            <h3>Nhập mã xác thực</h3>
+            <p>Mã đã được gửi đến email của bạn</p>
+            <div class="form-group">
+                <div class="code-inputs">
+                    <input type="text" maxlength="1" class="code-input" oninput="moveToNext(this)" />
+                    <input type="text" maxlength="1" class="code-input" oninput="moveToNext(this)" />
+                    <input type="text" maxlength="1" class="code-input" oninput="moveToNext(this)" />
+                    <input type="text" maxlength="1" class="code-input" oninput="moveToNext(this)" />
+                    <input type="text" maxlength="1" class="code-input" oninput="moveToNext(this)" />
+                    <input type="text" maxlength="1" class="code-input" oninput="moveToNext(this)" />
+                </div>
+                <input type="hidden" id="email" value="" />
+            </div>
+            <button onclick="submitVerificationCode()">Xác thực</button>
+            <div class="error" id="verifyCodeError"></div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="login-box mt-5">
             <div class="logo">
@@ -21,64 +299,248 @@
             <h2 class="login-title">Đăng ký</h2>
             <p class="subtitle">Hãy để chúng tôi đồng hành với sức khỏe của bạn</p>
 
-            <label for="fullname">Họ tên*</label>
-            <input type="text" id="fullname" placeholder="Nhập họ và tên của bạn">
+            <form asp-action="Register" asp-controller="Home" method="post" id="registerForm">
+                @Html.AntiForgeryToken()
 
-            <label for="phone">Số điện thoại*</label>
-            <input type="text" id="phone" placeholder="Nhập số điện thoại của bạn">
+                <label asp-for="UserName" for="fullname">Họ tên*</label>
+                <span asp-validation-for="UserName" style="color: red;"></span>
+                <input asp-for="UserName" type="text" id="fullname" placeholder="Nhập họ và tên của bạn" required>
 
-            <label for="email">Email*</label>
-            <input type="text" id="email" placeholder="Nhập email của bạn">
+                <label asp-for="PhoneNumber" for="phone">Số điện thoại*</label>
+                <span asp-validation-for="PhoneNumber" style="color: red;"></span>
+                <input asp-for="PhoneNumber" type="text" id="phone" placeholder="Nhập số điện thoại của bạn" required>
 
-            <label for="password">Mật Khẩu*</label>
-            <div class="password-box">
-                <input type="password" id="password" placeholder="Nhập mật khẩu">
-                <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="eye-icon" onclick="togglePassword()">
-            </div>
-            <p class="password-note">Phải ít nhất có 8 kí tự</p>
+                <label asp-for="Email" for="email">Email*</label>
+                <span asp-validation-for="Email" style="color: red;"></span>
+                <input asp-for="Email" type="email" id="email" placeholder="Nhập email của bạn" required>
 
-            <button class="login-button" onclick="alert('Đăng ký thành công!')">Đăng Ký</button>
+                <label asp-for="Password" for="password">Mật Khẩu*</label>
+                <div class="password-box">
+                    <input asp-for="Password" type="password" id="password" placeholder="Nhập mật khẩu" required>
+                    <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="eye-icon" onclick="togglePassword()">
+                </div>
+                <p class="password-note">Phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt</p>
+                <span asp-validation-for="Password" style="color: red;"></span>
+
+                <button class="login-button" type="submit">Đăng Ký</button>
+            </form>
 
             <div class="or-divider">OR</div>
             <div>
                 <div class="social-login">
-
                     <div class="social-Item">
-                        <form asp-action="ExternalLogin" asp-controller="Home" method="post" onsubmit="showLoading(this)">
+                        <form asp-action="ExternalRegister" asp-controller="Home" method="get" onsubmit="showLoading(this)">
                             <input type="hidden" name="provider" value="Facebook" />
                             <button class="social-button" type="submit"><img class="social-Img" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/5a6af1bb-48d5-47a6-95e8-d99297809cd7" alt="Facebook"></button>
                         </form>
                     </div>
                     <div class="social-Item">
-                        <form asp-action="ExternalLogin" asp-controller="Home" method="post" onsubmit="showLoading(this)">
+                        <form asp-action="ExternalRegister" asp-controller="Home" method="get" onsubmit="showLoading(this)">
                             <input type="hidden" name="provider" value="Google" />
                             <button class="social-button" type="submit"><img class="social-Img" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/58c5be9f-5285-4459-a89d-899f4c4e7927" alt="Google"></button>
                         </form>
                     </div>
                     <div class="social-Item">
-                        <button onclick="alert('Pressed!')" class="social-button"><img class="social-Img" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/49da0206-8dd1-4fd7-a080-856a23e7c010" alt="Apple"></button>
+                        <button onclick="alert('Tính năng đang bảo trì!')" class="social-button"><img class="social-Img" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/49da0206-8dd1-4fd7-a080-856a23e7c010" alt="Apple"></button>
                     </div>
-
                 </div>
                 <p class="register-text">
                     Bạn đã có tài khoản?
-                    <span class="register-link" onclick="window.location.href='@Url.Action("LogIn", "Home")'">
-                        Đăng Nhập
-                    </span>
+                    <span class="register-link" onclick="window.location.href='@Url.Action("Login", "Home")'">Đăng Nhập</span>
                 </p>
-
             </div>
-         
         </div>
 
         <img class="side-image" src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/d506cf88-040c-44b2-a399-563afb1106ef" alt="Side Image">
     </div>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
     <script>
         function togglePassword() {
             var passwordInput = document.getElementById("password");
             passwordInput.type = passwordInput.type === "password" ? "text" : "password";
         }
+
+        function showLoading(form) {
+            var button = form.querySelector('button');
+            button.innerHTML = '<span>Loading...</span>';
+            button.disabled = true;
+        }
+
+        // Hiển thị và ẩn thông báo
+        $(document).ready(function () {
+            var notification = $('#notification');
+            if (notification.length) {
+                notification.addClass('show');
+                setTimeout(function () {
+                    notification.removeClass('show');
+                }, 5000);
+            }
+        });
+
+        // Xử lý submit form và hiển thị reCAPTCHA nếu validation hợp lệ
+        $(document).ready(function () {
+            $('#registerForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var form = $(this);
+                form.validate();
+
+                if (form.valid()) {
+                    grecaptcha.reset(); // Reset reCAPTCHA trước khi hiển thị
+                    $('#captchaOverlay').css('display', 'flex');
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        // Hàm thoát reCAPTCHA
+        function closeCaptchaOverlay() {
+            $('#captchaOverlay').css('display', 'none');
+            grecaptcha.reset(); // Reset reCAPTCHA khi thoát
+        }
+
+        // Callback khi reCAPTCHA thành công
+        function onRecaptchaSuccess(token) {
+            var form = document.getElementById('registerForm');
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'g-recaptcha-response';
+            input.value = token;
+            form.appendChild(input);
+
+            $('#captchaOverlay').css('display', 'none');
+            $('#loadingOverlay').css('display', 'flex'); // Hiển thị loading
+
+            // Gửi form qua AJAX
+            $.ajax({
+                url: form.action,
+                type: form.method,
+                data: $(form).serialize(),
+                success: function (response) {
+                    $('#loadingOverlay').css('display', 'none'); // Ẩn loading
+                    if (response.success) {
+                        // Lưu email vào input hidden và hiển thị popup nhập mã
+                        $('#email').val(response.email);
+                        $('#verifyCodeOverlay').css('display', 'flex');
+                        // Reset các ô nhập mã
+                        $('.code-input').val('');
+                        $('.code-input').first().focus();
+                    } else {
+                        showNotification(response.message, 'error');
+                    }
+                },
+                error: function () {
+                    $('#loadingOverlay').css('display', 'none'); // Ẩn loading
+                    showNotification('Đã xảy ra lỗi. Vui lòng thử lại.', 'error');
+                }
+            });
+        }
+
+        // Hàm tự động nhảy sang ô tiếp theo
+        function moveToNext(input) {
+            // Chỉ nhảy sang ô tiếp theo nếu nhập số mới
+            if (input.value.length === 1) {
+                var nextInput = $(input).next('input.code-input');
+                if (nextInput.length) {
+                    // Kiểm tra ô tiếp theo có trống không, nếu không thì không nhảy
+                    if (!nextInput.val()) {
+                        nextInput.focus();
+                    }
+                }
+            }
+        }
+
+        // Hàm xử lý khi xóa
+        function handleBackspace(input, e) {
+            if (e.key === 'Backspace' && !input.value) {
+                var prevInput = $(input).prev('input.code-input');
+                if (prevInput.length) {
+                    prevInput.focus();
+                    prevInput.val(''); // Xóa giá trị ô trước
+                }
+            }
+        }
+
+        // Hàm thoát popup nhập mã
+        function closeVerifyCodeOverlay() {
+            $('#verifyCodeOverlay').css('display', 'none');
+            $('#verifyCodeError').text(''); // Xóa lỗi nếu có
+            $('.code-input').val(''); // Reset các ô nhập mã
+            grecaptcha.reset(); // Reset reCAPTCHA để yêu cầu xác thực lại
+        }
+
+        // Hàm gửi mã xác thực qua AJAX
+        function submitVerificationCode() {
+            // Lấy mã từ các ô nhập
+            var code = '';
+            $('.code-input').each(function () {
+                code += $(this).val();
+            });
+
+            var email = $('#email').val();
+
+            if (code.length !== 6) {
+                $('#verifyCodeError').text('Vui lòng nhập đủ 6 số.');
+                return;
+            }
+
+            $('#loadingOverlay').css('display', 'flex'); // Hiển thị loading
+
+            $.ajax({
+                url: '@Url.Action("VerifyCode", "Home")',
+                type: 'POST',
+                data: {
+                    email: email,
+                    code: code,
+                    '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+                    $('#loadingOverlay').css('display', 'none'); // Ẩn loading
+                    if (response.success) {
+                        $('#verifyCodeOverlay').css('display', 'none');
+                        showNotification('Đăng ký thành công! Vui lòng đăng nhập.', 'success');
+                        $('#registerForm')[0].reset(); // Làm mới form
+                    } else {
+                        $('#verifyCodeError').text(response.message);
+                    }
+                },
+                error: function () {
+                    $('#loadingOverlay').css('display', 'none'); // Ẩn loading
+                    $('#verifyCodeError').text('Đã xảy ra lỗi. Vui lòng thử lại.');
+                }
+            });
+        }
+
+        // Hàm hiển thị thông báo
+        function showNotification(message, type) {
+            var notification = $('<div class="notification '+ type +'" id="notification">' + message + '</div>');
+            $('body').append(notification);
+            notification.addClass('show');
+            setTimeout(function () {
+                notification.removeClass('show');
+                notification.remove();
+            }, 5000);
+        }
+
+        // Xử lý nhập chỉ số
+        $('.code-input').on('input', function () {
+            this.value = this.value.replace(/[^0-9]/g, ''); // Chỉ cho phép nhập số
+            moveToNext(this); // Gọi hàm nhảy ô sau khi nhập
+        });
+
+        // Xử lý phím Backspace và Enter
+        $('.code-input').on('keydown', function (e) {
+            handleBackspace(this, e); // Xử lý Backspace
+            if (e.key === 'Enter') {
+                submitVerificationCode();
+            }
+        });
     </script>
 </body>
 </html>

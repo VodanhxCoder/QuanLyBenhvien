@@ -8,6 +8,7 @@ namespace Backend_API.Data
         public HospitalManagementDbContext(DbContextOptions<HospitalManagementDbContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<VerificationCode> VerificationCodes { get; set; } // Thêm Code verification 
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
 
